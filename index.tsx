@@ -31,6 +31,7 @@ type Author = {
         tertiaryColor?: string;
     };
     colorRoleName: string;
+    guildId?: string;
 };
 
 const settings = definePluginSettings({
@@ -72,6 +73,11 @@ const settings = definePluginSettings({
         description: "",
         default: undefined,
         placeholder: "#000000"
+    },
+    dmsOnly: {
+        type: OptionType.BOOLEAN,
+        description: "Applies your color only in DMs",
+        default: false,
     }
 });
 
@@ -104,7 +110,10 @@ export default definePlugin({
     ],
 
     getAuthor(message: any, old: Author): Author {
-        if (message.author.id !== Common.UserStore.getCurrentUser().id) {
+        if (
+            message.author.id !== Common.UserStore.getCurrentUser().id
+            || (settings.store.dmsOnly && old.guildId)
+        ) {
             return old;
         }
 
@@ -120,7 +129,7 @@ export default definePlugin({
     },
 
     getColors(user: any, colorString: string, old: any) {
-        if (user.id !== Common.UserStore.getCurrentUser().id) {
+        if (user.id !== Common.UserStore.getCurrentUser().id || settings.store.dmsOnly) {
             return {
                 colorString,
                 roleColorStrings: old
