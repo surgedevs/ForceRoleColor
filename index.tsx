@@ -38,6 +38,7 @@ const settings = definePluginSettings({
         type: OptionType.COMPONENT,
         component: function () {
             return <Text>
+                <b>Colors must be in hex (in the format of #XXXXXX) i.e. #ff0000, #123456, etc.</b><br /><br />
                 Primary: Controls base color<br />
                 Secondary & Tertiary: Set for gradient
                 <br /><b>Switch channels for the color to update</b>
@@ -57,17 +58,20 @@ const settings = definePluginSettings({
     primaryColor: {
         type: OptionType.STRING,
         description: "",
-        default: undefined
+        default: undefined,
+        placeholder: "#000000"
     },
     secondaryColor: {
         type: OptionType.STRING,
         description: "",
-        default: undefined
+        default: undefined,
+        placeholder: "#000000"
     },
     tertiaryColor: {
         type: OptionType.STRING,
         description: "",
-        default: undefined
+        default: undefined,
+        placeholder: "#000000"
     }
 });
 
